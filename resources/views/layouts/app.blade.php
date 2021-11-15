@@ -75,10 +75,6 @@
             </div>
         </nav>
 
-        @guest
-          <img src="{{URL('/images/bg.jpg')}}" alt="bg" class="img-thumbnail rounded mx-auto d-block img-fluid rounded-circle">  
-        @endguest
-
         <main class="py-4">
             @yield('content')
         </main>
