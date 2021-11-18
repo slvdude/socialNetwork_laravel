@@ -26,7 +26,7 @@
                             </div>
                                 <form action="{{ route('post.destroy', $post) }}" class="form-horizontal" method="post">
                                     @csrf
-                                    @method('DELETE')
+                                    @method('delete')
                                     <button type="submit" class="btn btn-link pl-4">Delete</button>
                                 </form>
                         @endforeach
