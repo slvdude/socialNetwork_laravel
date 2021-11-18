@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-//use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +20,4 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/post', [App\Http\Controllers\PostController::class, 'store']);
+Route::post('/post/{post}', [App\Http\Controllers\PostController::class, 'destroy'])->name('post.destroy');
