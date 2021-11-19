@@ -23,7 +23,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-primary shadow-sm ">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/profile') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
                     Socnet
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -70,21 +70,20 @@
                                 </div>
                             </li>
                         @endguest
+                        
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{__('Users') }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 @foreach ($users as $user)
-                                    <a class="dropdown-item">
+                                    <a class="dropdown-item" href="{{ route('profile.user', $user) }}">
                                         {{$user->name}}
                                     </a> 
                                 @endforeach
-                                <form action="{{}}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
                             </div>
                         </li>
+                        
                     </ul>
                 </div>
             </div>

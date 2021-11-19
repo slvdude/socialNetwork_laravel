@@ -11,11 +11,13 @@ class PostController extends Controller
 
     public function store(Request $request) {
         $this->validate($request, [
-            'body' => 'required'
+            'body' => 'required',
+            //'profile_id' => 'required'
         ]);
-
+        dump($request->id);
         $request->user()->posts()->create([
-            'body' => $request->body
+            'body' => $request->body,
+            'profile_id' => $request->id
         ]);
 
         return back();
