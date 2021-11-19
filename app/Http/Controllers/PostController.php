@@ -14,7 +14,6 @@ class PostController extends Controller
             'body' => 'required',
             //'profile_id' => 'required'
         ]);
-        dump($request->id);
         $request->user()->posts()->create([
             'body' => $request->body,
             'profile_id' => $request->id
