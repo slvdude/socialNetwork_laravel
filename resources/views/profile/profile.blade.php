@@ -24,7 +24,7 @@
                         @foreach ($posts as $post)
                             <div class="bg-light">
                                 <div class=" pl-4 mt-4">
-                                    <a href="{{ route('profile.user', $post->user) }}" class="font-bold">{{ $post->user->name }}</a>
+                                    <a href="{{ route('profile.user', $post->user) }}" class="font-bold">{{ $post->user->name }}</a><span class="font-weight-bold text-secondary pl-4 small">{{ $post->created_at->diffForHumans() }}</span>
                                     <p class="mb-2">{{ $post->body }}</p>
                                 </div>
                                 @auth
