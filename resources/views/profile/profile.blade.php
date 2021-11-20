@@ -24,14 +24,18 @@
                         @foreach ($posts as $post)
                             <div class="bg-light">
                                 <div class=" pl-4 mt-4">
-                                    <a href="" class="font-bold">{{ $post->user->name }}</a>
+                                    <a href="{{ route('profile.user', $post->user) }}" class="font-bold">{{ $post->user->name }}</a>
                                     <p class="mb-2">{{ $post->body }}</p>
                                 </div>
-                                <form action="{{ route('post.destroy', $post) }}" class="form-horizontal" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-link pl-4">Delete</button>
-                                </form>
+                                @auth
+                                @if($post->ownedBy(auth()->user()->id))
+                                    <form action="{{ route('post.destroy', $post) }}" class="form-horizontal" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-link pl-4">Delete</button>
+                                    </form>
+                                @endif
+                                @endauth
                             </div>
                         @endforeach
                     @else

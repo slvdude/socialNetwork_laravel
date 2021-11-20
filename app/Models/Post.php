@@ -9,6 +9,10 @@ class Post extends Model
 {
     use HasFactory;
 
+    public function ownedBy($id) {
+        return $id === $this->user_id;
+    }
+
     protected $fillable = [
         'body',
         'profile_id'
