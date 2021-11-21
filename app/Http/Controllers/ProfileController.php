@@ -12,7 +12,7 @@ class ProfileController extends Controller
 
     public function index(User $user) {
         
-        $posts = Post::where('profile_id', $user->id)->get();
+        $posts = Post::where('profile_id', $user->id)->take(5)->get();
 
         return view('profile.profile', [
             'user' => $user,

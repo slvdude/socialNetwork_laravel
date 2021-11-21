@@ -24,10 +24,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('profile_id', auth()->user()->id)->get();
+        $posts = Post::where('profile_id', auth()->user()->id)->take(5)->get();
         //dd($posts);
         return view('home', [
             'posts' => $posts
         ]);
+    }
+
+    public function load() {
+        $posts = Post::where('profile_id', auth()->user()->id)->count();
+        dd($posts);
     }
 }

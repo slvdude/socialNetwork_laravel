@@ -38,6 +38,9 @@
                             </div>
                         </div>
                         @endforeach
+                        @if($posts->count() >= 5)
+                            <button class="pl-2 btn btn-link" id="load"><i class="fas fa-arrow-down fa-2x"></i></button>
+                        @endif
                     @else
                         <p class="center">There are no posts</p>
                     @endif
@@ -46,4 +49,25 @@
         </div>
     </div>
 </div>
+@section('scripts')
+<script>
+    $(document).ready(function(){
+                $('#load').click(function(e){
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "{{ url('/load') }}",
+                    method: 'get',
+                    success: function(result){
+                        $('.alert').show();
+                        $('.alert').html(result.success);
+                    }});
+                });
+                });
+</script>
+@endsection
 @endsection
