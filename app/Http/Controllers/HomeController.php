@@ -32,7 +32,11 @@ class HomeController extends Controller
     }
 
     public function load() {
-        $posts = Post::where('profile_id', auth()->user()->id)->count();
-        dd($posts);
+        $count = Post::where('profile_id', auth()->user()->id)->count();
+        //dd($count);
+        $skip = 5;
+        $limit = $count - $skip;
+        $collection = Post::where('profile_id', auth()->user()->id)->skip($skip)->take($limit)->get();
+        return response()->json(['success'=>true, 'data'=>$collection]);
     }
 }

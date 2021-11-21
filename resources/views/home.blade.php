@@ -38,8 +38,9 @@
                             </div>
                         </div>
                         @endforeach
+                        <div class="data"></div>
                         @if($posts->count() >= 5)
-                            <button class="pl-2 btn btn-link" id="load"><i class="fas fa-arrow-down fa-2x"></i></button>
+                            <button class="btn btn-link" id="load"><i class="fas fa-arrow-down fa-2x pl-1"></i></button>
                         @endif
                     @else
                         <p class="center">There are no posts</p>
@@ -60,11 +61,32 @@
                     }
                 });
                 $.ajax({
-                    url: "{{ url('/load') }}",
+                    url: "{{ route('load') }}",
                     method: 'get',
-                    success: function(result){
-                        $('.alert').show();
-                        $('.alert').html(result.success);
+                    dataType: "json",
+                    success: function(response){
+                        console.log(response.data);
+                        $.each(response.data, function(key, item) {
+                            $(".data").append(
+                                '<div class="bg-light">\
+                                    <div class=" pl-4 mt-4">\
+                                        <a href="{{ route('profile.user', $post->user) }}" class="font-bold">'+item.name+'</a><span class="font-weight-bold text-secondary pl-4 small">{{ $post->created_at->diffForHumans() }}</span>\
+                                        <p class="mb-2">'+item.body+'</p>\
+                                    </div>\
+                                    <div class="d-flex flex-row bd-highlight mb-3">\
+                                        <form action="{{ route('post.destroy', '+item+') }}" class="form-horizontal" method="post">\
+                                            @csrf\
+                                            @method('delete')\
+                                            <button type="submit" class="btn btn-link pl-4">Delete</button>\
+                                        </form>\
+                                        <form action="" class="form-horizontal" method="post">\
+                                            @csrf\
+                                            <button type="submit" class="btn btn-link pl-4">Reply</button>\
+                                        </form>\
+                                    </div>\
+                                </div>'
+                            );
+                        })
                     }});
                 });
                 });
