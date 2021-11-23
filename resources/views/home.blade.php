@@ -31,14 +31,17 @@
                                     @method('delete')
                                     <button type="submit" class="btn btn-link pl-4">Delete</button>
                                 </form>
-                                <form action="" class="form-horizontal" method="post">
-                                    @csrf
-                                    <button type="submit" class="btn btn-link pl-4">Reply</button>
-                                </form>
+                                <a class="btn btn-link pl-4 reply" body="{{ $post->body }}" token="{{ csrf_token() }}" pid="{{ $post->id }}">Reply</a>
+                                <div class="reply-form">
+                                    
+                                    <!-- Dynamic Reply form -->
+                                    
+                                </div>
                             </div>
                         </div>
+                        
                         @endforeach
-                        <div class="data"></div>
+                        <div class="loaded-data"></div>
                         @if($posts->count() >= 5)
                             <button class="btn btn-link" id="load"><i class="fas fa-arrow-down fa-2x pl-1"></i></button>
                         @endif
@@ -52,44 +55,50 @@
 </div>
 @section('scripts')
 <script>
-    $(document).ready(function(){
-                $('#load').click(function(e){
-                e.preventDefault();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
+$(document).ready(function() {
+    let loaded = false;
+    $('#load').click(function(e){
+        if(loaded === true) return;
+        e.preventDefault();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ route('load') }}",
+            method: 'get',
+            dataType: "json",
+            success: function(response){
+                loaded = true;
+                console.log(response.data);
+                $(".test").append(`${response.data}`)
+                $.each(response.data, function(key, item) {
+                    console.log(item.body)
+                    $(".loaded-data").append(
+                        '<div class="bg-light">\
+                            <div class=" pl-4 mt-4">\
+                                <a href="{{ route('profile.user', $post->user) }}" class="font-bold">'+item.name+'</a><span class="font-weight-bold text-secondary pl-4 small">{{ $post->created_at->diffForHumans() }}</span>\
+                                <p class="mb-2">'+item.body+'</p>\
+                            </div>\
+                            <div class="d-flex flex-row bd-highlight mb-3">\
+                                <form action="{{ route('post.destroy', $post) }}" class="form-horizontal" method="post">\
+                                    @csrf\
+                                    @method('delete')\
+                                    <button type="submit" class="btn btn-link pl-4">Delete</button>\
+                                </form>\
+                                <form action="" class="form-horizontal" method="post">\
+                                    @csrf\
+                                    <button type="submit" class="btn btn-link pl-4">Reply</button>\
+                                </form>\
+                            </div>\
+                        </div>'
+                    );
                 });
-                $.ajax({
-                    url: "{{ route('load') }}",
-                    method: 'get',
-                    dataType: "json",
-                    success: function(response){
-                        console.log(response.data);
-                        $.each(response.data, function(key, item) {
-                            $(".data").append(
-                                '<div class="bg-light">\
-                                    <div class=" pl-4 mt-4">\
-                                        <a href="{{ route('profile.user', $post->user) }}" class="font-bold">'+item.name+'</a><span class="font-weight-bold text-secondary pl-4 small">{{ $post->created_at->diffForHumans() }}</span>\
-                                        <p class="mb-2">'+item.body+'</p>\
-                                    </div>\
-                                    <div class="d-flex flex-row bd-highlight mb-3">\
-                                        <form action="{{ route('post.destroy', '+item+') }}" class="form-horizontal" method="post">\
-                                            @csrf\
-                                            @method('delete')\
-                                            <button type="submit" class="btn btn-link pl-4">Delete</button>\
-                                        </form>\
-                                        <form action="" class="form-horizontal" method="post">\
-                                            @csrf\
-                                            <button type="submit" class="btn btn-link pl-4">Reply</button>\
-                                        </form>\
-                                    </div>\
-                                </div>'
-                            );
-                        })
-                    }});
-                });
-                });
+            }});
+        });
+    });
 </script>
+<script type="text/javascript" src="{{ asset('/js/main.js') }}"></script>
 @endsection
 @endsection

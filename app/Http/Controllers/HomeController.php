@@ -37,6 +37,6 @@ class HomeController extends Controller
         $skip = 5;
         $limit = $count - $skip;
         $collection = Post::where('profile_id', auth()->user()->id)->skip($skip)->take($limit)->get();
-        return response()->json(['success'=>true, 'data'=>$collection]);
+        return response()->json(['data'=>$collection]);
     }
 }
