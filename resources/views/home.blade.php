@@ -26,7 +26,7 @@
                                 <p class="mb-2">{{ $post->body }}</p>
                             </div>
                             <div class="d-flex flex-row bd-highlight mb-3">
-                                <form action="{{ route('post.destroy', $post) }}" class="form-horizontal" method="post">
+                                <form action="{{ route('post.destroy', $post->id) }}" class="form-horizontal" method="post">
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="btn btn-link pl-4">Delete</button>
@@ -74,12 +74,12 @@ $(document).ready(function() {
                 console.log(response.data);
                 $(".test").append(`${response.data}`)
                 $.each(response.data, function(key, item) {
-                    console.log(item.body)
+                    console.log(item.id)
                     $(".loaded-data").append(
-                        '<div class="bg-light">\
+                        `<div class="bg-light">\
                             <div class=" pl-4 mt-4">\
-                                <a href="{{ route('profile.user', $post->user) }}" class="font-bold">'+item.name+'</a><span class="font-weight-bold text-secondary pl-4 small">{{ $post->created_at->diffForHumans() }}</span>\
-                                <p class="mb-2">'+item.body+'</p>\
+                                <a href="{{ route('profile.user', $post->user) }}" class="font-bold">${item.name}</a><span class="font-weight-bold text-secondary pl-4 small">{{ $post->created_at->diffForHumans() }}</span>\
+                                <p class="mb-2">${item.body}</p>\
                             </div>\
                             <div class="d-flex flex-row bd-highlight mb-3">\
                                 <form action="{{ route('post.destroy', $post) }}" class="form-horizontal" method="post">\
@@ -92,7 +92,7 @@ $(document).ready(function() {
                                     <button type="submit" class="btn btn-link pl-4">Reply</button>\
                                 </form>\
                             </div>\
-                        </div>'
+                        </div>`
                     );
                 });
             }});

@@ -23,8 +23,8 @@ class PostController extends Controller
         return back();
     }
 
-    public function destroy(Post $post) {
-        $post->delete();
+    public function destroy($id) {
+        Post::where('id', $id)->delete();
         return back();
     }
 }
