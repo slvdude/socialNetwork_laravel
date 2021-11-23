@@ -38,11 +38,12 @@ class HomeController extends Controller
         $limit = $count - $skip;
         $collection = Post::where('profile_id', auth()->user()->id)->skip($skip)->take($limit)->get();
         $data = [];
-        foreach($collection as $key => $item) {
+        foreach($collection as $item) {
             array_push($data, [
                 'id' => $item->id,
                 'name' => $item->user->name,
-                'body' => $item->body 
+                'body' => $item->body,
+                'time' => $item->created_at->diffForHumans()
             ]);
         }
         return response()->json(['data'=>$data]);

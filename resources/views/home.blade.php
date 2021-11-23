@@ -78,11 +78,11 @@ $(document).ready(function() {
                     $(".loaded-data").append(
                         `<div class="bg-light">\
                             <div class=" pl-4 mt-4">\
-                                <a href="{{ route('profile.user', $post->user) }}" class="font-bold">${item.name}</a><span class="font-weight-bold text-secondary pl-4 small">{{ $post->created_at->diffForHumans() }}</span>\
+                                <a href="{{ route('profile.user', $post->user) }}" class="font-bold">${item.name}</a><span class="font-weight-bold text-secondary pl-4 small">${item.time}</span>\
                                 <p class="mb-2">${item.body}</p>\
                             </div>\
                             <div class="d-flex flex-row bd-highlight mb-3">\
-                                <form action="{{ route('post.destroy', $post) }}" class="form-horizontal" method="post">\
+                                <form action="{{ route('post.destroy', ${item.id}) }}" class="form-horizontal" method="post">\
                                     @csrf\
                                     @method('delete')\
                                     <button type="submit" class="btn btn-link pl-4">Delete</button>\
