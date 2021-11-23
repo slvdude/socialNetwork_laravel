@@ -31,12 +31,11 @@
                                     @method('delete')
                                     <button type="submit" class="btn btn-link pl-4">Delete</button>
                                 </form>
-                                <a class="btn btn-link pl-4 reply" body="{{ $post->body }}" token="{{ csrf_token() }}" pid="{{ $post->id }}">Reply</a>
+                                <a class="btn btn-link pl-4 reply" body="{{ $post->body }}" name={{ $post->user->name }} token="{{ csrf_token() }}" pid="{{ $post->id }}">Reply</a>
                                 <div class="reply-form">
-                                    
                                     <!-- Dynamic Reply form -->
-                                    
                                 </div>
+
                             </div>
                         </div>
                         

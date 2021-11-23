@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +22,4 @@ Route::post('/post', [App\Http\Controllers\PostController::class, 'store']);
 Route::delete('/post/{post}', [App\Http\Controllers\PostController::class, 'destroy'])->name('post.destroy');
 Route::get('/load', [App\Http\Controllers\HomeController::class, 'load'])->name('load');
 Route::get('/profile/{user}', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.user');
+Route::resource('/replies', [App\Http\Controllers\ReplyController::class, 'store']);
