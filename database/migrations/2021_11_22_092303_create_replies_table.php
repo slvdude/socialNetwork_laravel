@@ -15,10 +15,10 @@ class CreateRepliesTable extends Migration
     {
         Schema::create('replies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('post_id');
+            $table->foreignId('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->text('body');
             $table->text('reply');
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

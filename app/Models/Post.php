@@ -23,6 +23,6 @@ class Post extends Model
     }
 
     public function replies(){
-    	return $this->hasMany(Post::class);
+    	return $this->hasMany(Reply::class);
     }
 }

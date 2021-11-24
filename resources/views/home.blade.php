@@ -32,13 +32,25 @@
                                     <button type="submit" class="btn btn-link pl-4">Delete</button>
                                 </form>
                                 <a class="btn btn-link pl-4 reply" body="{{ $post->body }}" name={{ $post->user->name }} token="{{ csrf_token() }}" pid="{{ $post->id }}">Reply</a>
+                            </div>
+                            <div class="pl-4">
                                 <div class="reply-form">
                                     <!-- Dynamic Reply form -->
                                 </div>
-
+                                @foreach($post->replies as $rep)
+                                    @if($post->id === $rep->post_id)
+                                        <div>
+                                            <i><b> "{{ $rep->body }}", </b></i>
+                                            <span> {{ $rep->reply }} </span>
+                                            <div>
+                                                <a did="{{ $rep->id }}" class="btn btn-link delete-reply" token="{{ csrf_token() }}" >Delete</a>
+                                                <a rname="{{ Auth::user()->name }}" rid="{{ $post->id }}" class="btn btn-link reply-to-reply" token="{{ csrf_token() }}">Reply</a>
+                                            </div>
+                                        </div>
+                                    @endif 
+                                @endforeach
                             </div>
-                        </div>
-                        
+                        </div>  
                         @endforeach
                         <div class="loaded-data">
                             
