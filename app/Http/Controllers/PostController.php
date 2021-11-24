@@ -19,10 +19,9 @@ class PostController extends Controller
             'body' => $request->body,
             'profile_id' => $request->id
         ]);
-
         return back();
     }
-
+    
     public function destroy($id) {
         Post::where('id', $id)->delete();
         return back();

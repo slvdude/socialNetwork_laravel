@@ -31,8 +31,9 @@ class HomeController extends Controller
         ]);
     }
 
-    public function load() {
-        $count = Post::where('profile_id', auth()->user()->id)->count();
+    public function load(Request $request) {
+        //dd($request->id);
+        $count = Post::where('profile_id', $request->id)->count();
         //dd($count);
         $skip = 5;
         $limit = $count - $skip;

@@ -38,8 +38,9 @@
                                 @endauth
                             </div>
                         @endforeach
+                        <div class="loaded-data"></div>
                         @if($posts->count() >= 5)
-                            <a href="#" class="pl-2"><i class="fas fa-arrow-down fa-2x"></i></a>
+                            <a href="#" class="pl-2" uid="{{ $user->id }}" id="load"><i class="fas fa-arrow-down fa-2x"></i></a>
                         @endif
                     @else
                         <p class="center">There are no posts</p>

@@ -33,8 +33,8 @@
                                 </form>
                                 <a class="btn btn-link pl-4 reply" body="{{ $post->body }}" name={{ $post->user->name }} token="{{ csrf_token() }}" pid="{{ $post->id }}">Reply</a>
                             </div>
-                            <div class="pl-4">
-                                <div class="reply-form">
+                            <div class="pl-4 pr-4">
+                                <div class="reply-form form-horizontal">
                                     <!-- Dynamic Reply form -->
                                 </div>
                                 @foreach($post->replies as $rep)
@@ -56,7 +56,7 @@
                             
                         </div>
                         @if($posts->count() >= 5)
-                            <button class="btn btn-link" id="load"><i class="fas fa-arrow-down fa-2x pl-1"></i></button>
+                            <a class="btn btn-link" id="load" uid="{{auth()->user()->id}}"><i class="fas fa-arrow-down fa-2x pl-1"></i></a>
                         @endif
                     @else
                         <p class="center">There are no posts</p>
@@ -66,31 +66,4 @@
         </div>
     </div>
 </div>
-@section('scripts')
-<script>
-$(document).ready(function() {
-    let loaded = false;
-    $('#load').click(function(e){
-        if(loaded === true) return;
-        e.preventDefault();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "{{ route('load') }}",
-            method: 'get',
-            dataType: "json",
-            success: function(response){
-                loaded = true;
-                console.log(response)
-                $('.loaded-data').append(response.view);
-                }
-            });
-        });
-    });
-</script>
-<script type="text/javascript" src="{{ asset('/js/main.js') }}"></script>
-@endsection
 @endsection
